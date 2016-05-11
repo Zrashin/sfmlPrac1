@@ -1,6 +1,5 @@
 #pragma once
 class SplashScreen
-#include "stdafx.h"
 
 {
 public:

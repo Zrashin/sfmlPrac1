@@ -1,7 +1,5 @@
 #pragma once
-#include "stdafx.h"
 #include <list>
-
 class MainMenu
 {	
 public:

@@ -3,12 +3,19 @@
 #include "SplashScreen.h"
 #include "MainMenu.h"
 
+Game::GameState Game::_gameState = Uninitialized;
+sf::RenderWindow Game::_mainWindow;
+PlayerPaddle Game::_player1;
+
 void Game::Start() 
 {
 	if (_gameState != Uninitialized)
 		return;
 
 	_mainWindow.create(sf::VideoMode(1024, 768, 32), "SHOCKWINDOW!");
+
+	_player1.Load("images/paddle.png");
+	_player1.SetPosition((1024/2)-45,700);
 
 	_gameState = Game::ShowingSplash;
 
@@ -50,6 +57,7 @@ void Game::GameLoop()
 			{
 
 				_mainWindow.clear(sf::Color(0, 0, 0));
+				_player1.Draw(_mainWindow);
 				_mainWindow.display();
 
 				if (currentEvent.type == sf::Event::Closed)
@@ -57,7 +65,7 @@ void Game::GameLoop()
 					_gameState = Game::Exiting;
 				}
 
-				if (currentEvent.type == sf::Event::KeyPressed)
+				if (currentEvent.type == sf::Event::KeyPressed)  
 				{
 					if (currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
 				}
@@ -88,7 +96,3 @@ void Game::ShowMenu()
 		break;
 	}
 }
-
-
-Game::GameState Game::_gameState = Uninitialized;
-sf::RenderWindow Game::_mainWindow;

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MainMenu.h"
+#include <list>
 
 MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window)
 {
@@ -65,7 +66,11 @@ MainMenu::MenuResult  MainMenu::GetMenuResponse(sf::RenderWindow& window)
 		{
 			if (menuEvent.type == sf::Event::MouseButtonPressed)
 			{
-				return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);
+				if (menuEvent.key.code == sf::Mouse::Left) 
+				{
+					std::cout << menuEvent.mouseButton.x << " " << menuEvent.mouseButton.y << std::endl;
+					return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);
+				}
 			}
 			if (menuEvent.type == sf::Event::Closed)
 			{
