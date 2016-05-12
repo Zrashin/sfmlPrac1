@@ -72,6 +72,13 @@ MainMenu::MenuResult  MainMenu::GetMenuResponse(sf::RenderWindow& window)
 					return HandleClick(menuEvent.mouseButton.x, menuEvent.mouseButton.y);
 				}
 			}
+			if (menuEvent.type == sf::Event::KeyPressed) 
+			{
+				if (menuEvent.key.code == sf::Keyboard::Escape)
+				{
+					return Exit;
+				}
+			}
 			if (menuEvent.type == sf::Event::Closed)
 			{
 				return Exit;
