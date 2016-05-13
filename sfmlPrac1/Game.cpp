@@ -5,17 +5,23 @@
 
 Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
-PlayerPaddle Game::_player1;
+GameObjectManager Game::_gameObjectManager;
 
-void Game::Start() 
+void Game::Start(void)
 {
 	if (_gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(1024, 768, 32), "SHOCKWINDOW!");
+	_mainWindow.create(sf::VideoMode(1024, 768, 32), "Pang!");
 
-	_player1.Load("images/paddle.png");
-	_player1.SetPosition((1024/2)-45,700);
+
+	PlayerPaddle *player1 = new PlayerPaddle();
+
+	player1->Load("images/paddle.png");
+	player1->SetPosition((1024 / 2) - 45, 700);
+
+	_gameObjectManager.Add("Paddle1", player1);
+
 
 	_gameState = Game::ShowingSplash;
 
@@ -23,6 +29,7 @@ void Game::Start()
 	{
 		GameLoop();
 	}
+
 	_mainWindow.close();
 }
 
@@ -57,7 +64,9 @@ void Game::GameLoop()
 			{
 
 				_mainWindow.clear(sf::Color(0, 0, 0));
-				_player1.Draw(_mainWindow);
+
+				_gameObjectManager.DrawAll(_mainWindow);
+
 				_mainWindow.display();
 
 				if (currentEvent.type == sf::Event::Closed)
