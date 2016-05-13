@@ -1,4 +1,5 @@
-﻿  Game.cpp
-d:\programming stuff\projects\sfmlprac1\sfmlprac1\game.cpp(19): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\programming stuff\projects\sfmlprac1\sfmlprac1\game.cpp(56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  VisibleGameObject.cpp
+  MainMenu.cpp
+  Game.cpp
+  Generating Code...
   sfmlPrac1.vcxproj -> D:\PROGRAMMING STUFF\Projects\sfmlPrac1\Debug\sfmlPrac1.exe
