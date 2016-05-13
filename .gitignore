@@ -34,6 +34,8 @@ $RECYCLE.BIN/
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
+.vc.opendb
+.vc.db
 .Spotlight-V100
 .TemporaryItems
 .Trashes
