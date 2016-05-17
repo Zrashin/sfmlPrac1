@@ -34,6 +34,8 @@ $RECYCLE.BIN/
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
+.vc.opendb
+.vc.db
 .Spotlight-V100
 .TemporaryItems
 .Trashes
@@ -45,3 +47,6 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.vs/sfmlPrac1/v14/.suo
+*.db
+sfmlPrac1.VC.db
