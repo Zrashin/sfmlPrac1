@@ -1,29 +1,28 @@
 #include "stdafx.h"
 #include "Game.h"
-#include "SplashScreen.h"
 #include "MainMenu.h"
-
-Game::GameState Game::_gameState = Uninitialized;
-sf::RenderWindow Game::_mainWindow;
-GameObjectManager Game::_gameObjectManager;
+#include "SplashScreen.h"
 
 void Game::Start(void)
 {
 	if (_gameState != Uninitialized)
 		return;
 
-	_mainWindow.create(sf::VideoMode(1024, 768, 32), "Pang!");
+	_mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), "Pang!");
 
+	//_mainWindow.SetFramerateLimit(60);
 
 	PlayerPaddle *player1 = new PlayerPaddle();
+	player1->SetPosition((SCREEN_WIDTH / 2), 700);
 
-	player1->Load("images/paddle.png");
-	player1->SetPosition((1024 / 2) - 45, 700);
+	GameBall *ball = new GameBall();
+	ball->SetPosition((SCREEN_WIDTH / 2), (SCREEN_HEIGHT / 2) - 15);
 
 	_gameObjectManager.Add("Paddle1", player1);
-
+	_gameObjectManager.Add("Ball", ball);
 
 	_gameState = Game::ShowingSplash;
+
 
 	while (!IsExiting())
 	{
@@ -41,46 +40,47 @@ bool Game::IsExiting()
 		return false;
 }
 
+
+sf::RenderWindow& Game::GetWindow()
+{
+	return _mainWindow;
+}
+
 void Game::GameLoop()
 {
-	
-		switch (_gameState)
+	sf::Event currentEvent;
+	_mainWindow.pollEvent(currentEvent);
+
+
+	switch (_gameState)
+	{
+	case Game::ShowingMenu:
+	{
+		ShowMenu();
+		break;
+	}
+	case Game::ShowingSplash:
+	{
+		ShowSplashScreen();
+		break;
+	}
+	case Game::Playing:
+	{
+		_mainWindow.clear(sf::Color(0, 0, 0));
+
+		_gameObjectManager.UpdateAll();
+		_gameObjectManager.DrawAll(_mainWindow);
+
+		_mainWindow.display();
+		if (currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
+
+		if (currentEvent.type == sf::Event::KeyPressed)
 		{
-		case Game::ShowingMenu:
-		{
-			ShowMenu();
-			break;
+			if (currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
 		}
 
-		case Game::ShowingSplash:
-		{
-			ShowSplashScreen();
-			break;
-		}
-		case Game::Playing:
-		{
-			sf::Event currentEvent;
-			while (_mainWindow.pollEvent(currentEvent))
-			{
-
-				_mainWindow.clear(sf::Color(0, 0, 0));
-
-				_gameObjectManager.DrawAll(_mainWindow);
-
-				_mainWindow.display();
-
-				if (currentEvent.type == sf::Event::Closed)
-				{
-					_gameState = Game::Exiting;
-				}
-
-				if (currentEvent.type == sf::Event::KeyPressed)  
-				{
-					if (currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
-				}
-			}
-			break;
-		}
+		break;
+	}
 	}
 }
 
@@ -98,10 +98,14 @@ void Game::ShowMenu()
 	switch (result)
 	{
 	case MainMenu::Exit:
-		_gameState = Game::Exiting;
+		_gameState = Exiting;
 		break;
 	case MainMenu::Play:
-		_gameState = Game::Playing;
+		_gameState = Playing;
 		break;
 	}
 }
+
+Game::GameState Game::_gameState = Uninitialized;
+sf::RenderWindow Game::_mainWindow;
+GameObjectManager Game::_gameObjectManager;
