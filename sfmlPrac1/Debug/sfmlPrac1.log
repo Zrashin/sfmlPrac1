@@ -1,7 +1,7 @@
-﻿  GameObjectManager.cpp
-  Game.cpp
+﻿  Game.cpp
+  Ball.cpp
   Generating Code...
-  Compiling...
+  Skipping... (no relevant changes detected)
   sfmlPrac1.cpp
-  Generating Code...
+  PlayerPaddle.cpp
   sfmlPrac1.vcxproj -> D:\PROGRAMMING STUFF\Projects\sfmlPrac1\Debug\sfmlPrac1.exe
